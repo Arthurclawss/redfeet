@@ -75,9 +75,9 @@ export default function Home() {
             className="space-y-2"
           >
             <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold uppercase tracking-tight text-white leading-[0.95]">
-              AS MELHORES <br />
+              O CATÁLOGO DAS <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-red-500 to-red-400 drop-shadow-[0_0_30px_rgba(220,38,38,0.3)]">
-                TELINHAS
+                MELHORES TELINHAS
               </span>{' '}
               DO BRASIL!
             </h1>
