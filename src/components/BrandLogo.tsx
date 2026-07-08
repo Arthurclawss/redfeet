@@ -16,7 +16,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({ logoKey, className = "w-fu
           <img 
             src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" 
             alt="Netflix" 
-            className="w-36 h-10 object-contain drop-shadow-[0_4px_12px_rgba(229,9,20,0.3)]" 
+            className="w-20 h-8 object-contain drop-shadow-[0_4px_12px_rgba(229,9,20,0.3)]" 
           />
         </div>
       );
@@ -160,15 +160,15 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({ logoKey, className = "w-fu
     case 'viki':
       return (
         <div className="flex items-baseline justify-center gap-0.5 select-none">
-          <span className="text-[8px] font-bold text-white/40 uppercase mr-0.5">Rakuten</span>
-          <span className="text-base font-black text-[#00A8E5]">Viki</span>
+          <span className="text-[10px] font-bold text-white/40 uppercase mr-0.5">Rakuten</span>
+          <span className="text-[21px] font-black text-[#00A8E5]">Viki</span>
         </div>
       );
     case 'vivoplay':
       return (
-        <div className="flex items-center justify-center gap-1 select-none">
-          <span className="text-base font-black italic text-[#9933FF]">vivo</span>
-          <span className="text-[9px] font-bold text-white tracking-widest">PLAY</span>
+        <div className="flex items-baseline justify-center gap-1 select-none">
+          <span className="text-[22px] font-black italic text-[#9933FF]">vivo</span>
+          <span className="text-[12px] font-bold text-white tracking-widest">PLAY</span>
         </div>
       );
     case 'crunchyroll':
