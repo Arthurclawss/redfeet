@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate, AnimatePresence } from 'framer-motion';
 import { Check } from 'lucide-react';
+import confetti from 'canvas-confetti';
 import { PRODUCTS, type Product } from '../data/data';
 import BrandLogo from './BrandLogo';
 
@@ -55,23 +56,43 @@ const FlyerCard: React.FC<FlyerCardProps> = ({ product, isSelected, idx, onToggl
     y.set(0);
   };
 
+  const handleToggle = () => {
+    if (!isSelected) {
+      const rect = cardRef.current?.getBoundingClientRect();
+      if (rect) {
+        const xPercent = (rect.left + rect.width / 2) / window.innerWidth;
+        const yPercent = (rect.top + rect.height / 2) / window.innerHeight;
+        
+        confetti({
+          particleCount: 25,
+          spread: 45,
+          origin: { x: xPercent, y: yPercent },
+          colors: [product.textColor, '#ffffff'],
+          ticks: 60
+        });
+      }
+    }
+    onToggleSelect(product);
+  };
+
   return (
     <motion.div
       ref={cardRef}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.3, delay: idx * 0.03 }}
+      layout
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      transition={{ duration: 0.3 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      onClick={() => onToggleSelect(product)}
+      onClick={handleToggle}
       style={{
         rotateX,
         rotateY,
         transformStyle: 'preserve-3d',
         boxShadow: isSelected ? `0 0 25px ${product.glowColor}` : undefined
       }}
-      className={`relative h-40 sm:h-64 rounded-2xl sm:rounded-3xl bg-black/40 border cursor-pointer select-none overflow-hidden transition-all duration-300 flex flex-col justify-between group ${
+      className={`relative h-52 sm:h-64 rounded-2xl sm:rounded-3xl bg-black/40 border cursor-pointer select-none overflow-hidden transition-all duration-300 flex flex-col justify-between group ${
         isSelected
           ? 'border-red-600 bg-red-950/10'
           : 'border-white/5 hover:border-white/10 hover:bg-white/[0.02]'
@@ -86,45 +107,53 @@ const FlyerCard: React.FC<FlyerCardProps> = ({ product, isSelected, idx, onToggl
       {/* Top Row / Popular Badge */}
       <div 
         style={{ transform: 'translateZ(20px)' }}
-        className="p-3 sm:p-4 flex justify-between items-start relative z-10"
+        className="p-4 flex justify-between items-start relative z-10"
       >
         {product.popular ? (
-          <span className="text-[7px] sm:text-[10px] font-black tracking-widest text-red-500 bg-red-500/10 border border-red-500/20 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full uppercase">
+          <span className="text-[8px] sm:text-[10px] font-black tracking-widest text-red-500 bg-red-500/10 border border-red-500/20 px-2 py-0.5 sm:py-1 rounded-full uppercase">
             Popular
           </span>
         ) : (
           <span />
         )}
         <div
-          className={`w-5 h-5 sm:w-6 h-6 rounded-full flex items-center justify-center border transition-all duration-300 ${
+          className={`w-5.5 h-5.5 sm:w-6 h-6 rounded-full flex items-center justify-center border transition-all duration-300 ${
             isSelected
               ? 'bg-red-600 border-red-600 text-white'
               : 'border-white/10 bg-black/40 text-transparent'
           }`}
         >
-          <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[3]" />
+          <Check className="w-3.5 h-3.5 stroke-[3]" />
         </div>
       </div>
 
       {/* Logo (Centered) - Floating 3D Parallax Effect */}
       <div 
         style={{ transform: 'translateZ(50px)' }}
-        className="flex-grow flex items-center justify-center p-3 sm:p-4 relative z-10 scale-[1.3] sm:scale-[2.1] group-hover:scale-[1.45] group-hover:sm:scale-[2.3] transition-transform duration-350"
+        className="flex-grow flex items-center justify-center p-4 relative z-10 scale-[1.7] sm:scale-[2.1] group-hover:scale-[1.85] group-hover:sm:scale-[2.3] transition-transform duration-355"
       >
         <BrandLogo logoKey={product.logoKey} />
       </div>
 
-      {/* Price Banner */}
+      {/* Price Banner with Brand-aligned Glow */}
       <div
         style={{ transform: 'translateZ(15px)' }}
-        className={`h-11 sm:h-14 border-t flex items-center justify-center px-3 sm:px-4 relative z-10 transition-colors duration-300 ${
+        className={`h-12 sm:h-14 border-t flex items-center justify-center px-4 relative z-10 transition-colors duration-300 ${
           isSelected
             ? 'border-red-500/20 bg-red-500/10 text-red-500'
             : 'border-white/5 bg-white/[0.02] text-gray-400'
         }`}
       >
         <div className="text-center">
-          <span className="text-xs sm:text-base font-black text-white mr-0.5 sm:mr-1">R$ {product.price.toFixed(2)}</span>
+          <span 
+            className="text-xs sm:text-base font-black mr-0.5 sm:mr-1 transition-all duration-300"
+            style={{ 
+              color: isSelected ? product.textColor : '#ffffff',
+              textShadow: isSelected ? `0 0 10px ${product.glowColor}` : undefined
+            }}
+          >
+            R$ {product.price.toFixed(2)}
+          </span>
           <span className="text-[8px] sm:text-[10px] uppercase tracking-widest font-bold opacity-60">/ mês</span>
         </div>
       </div>
@@ -161,21 +190,23 @@ export const FlyerGrid: React.FC<FlyerGridProps> = ({ selectedIds, onToggleSelec
         ))}
       </div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-        {filteredProducts.map((product, idx) => {
-          const isSelected = selectedIds.includes(product.id);
-          return (
-            <FlyerCard
-              key={product.id}
-              product={product}
-              isSelected={isSelected}
-              idx={idx}
-              onToggleSelect={onToggleSelect}
-            />
-          );
-        })}
-      </div>
+      {/* Grid with Framer Motion AnimatePresence & layout transitions */}
+      <motion.div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6">
+        <AnimatePresence mode="popLayout">
+          {filteredProducts.map((product, idx) => {
+            const isSelected = selectedIds.includes(product.id);
+            return (
+              <FlyerCard
+                key={product.id}
+                product={product}
+                isSelected={isSelected}
+                idx={idx}
+                onToggleSelect={onToggleSelect}
+              />
+            );
+          })}
+        </AnimatePresence>
+      </motion.div>
     </div>
   );
 };
