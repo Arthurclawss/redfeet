@@ -122,7 +122,7 @@ export default function Home() {
           <div className="max-w-xl mx-auto pt-8 text-center space-y-4">
             <button
               onClick={() => {
-                const phone = '5511999999999';
+                const phone = '558498071144';
                 let text = "Olá REDFEET TV! Quero assinar e tirar dúvidas sobre as telinhas.";
                 if (selectedItems.length > 0) {
                   text = `Olá REDFEET TV! Tenho interesse em assinar o combo com as telinhas:\n\n` + 
@@ -160,7 +160,7 @@ export default function Home() {
       <div className="fixed bottom-6 left-0 right-0 z-40 px-6 flex justify-center pointer-events-none">
         <button
           onClick={() => {
-            const phone = '5511999999999';
+            const phone = '558498071144';
             let text = "Olá REDFEET TV! Quero assinar e tirar dúvidas sobre as telinhas.";
             if (selectedItems.length > 0) {
               text = `Olá REDFEET TV! Tenho interesse em assinar o combo com as telinhas:\n\n` + 

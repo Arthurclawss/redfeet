@@ -22,7 +22,7 @@ export const Navbar: React.FC = () => {
         {/* Action Link */}
         <button
           onClick={() => {
-            const phone = '5511999999999';
+            const phone = '558498071144';
             const text = "Olá REDFEET TV! Quero assinar e tirar dúvidas sobre as telinhas.";
             window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
           }}
