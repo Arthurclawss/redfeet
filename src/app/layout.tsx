@@ -13,8 +13,25 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://redfeet-tv.vercel.app'),
   title: "REDFEET TV | As Melhores Telinhas do Brasil!",
   description: "Líderes de telinhas no mercado. Netflix, Prime Video, Disney+, HBO Max, Globoplay, Premiere, UFC Fight Pass e muito mais de forma interativa e com ativação imediata.",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
+  openGraph: {
+    title: "REDFEET TV | As Melhores Telinhas do Brasil!",
+    description: "Líderes de telinhas no mercado. Ativação imediata de combos e telinhas individuais.",
+    images: [
+      {
+        url: "/logo.png",
+        width: 800,
+        height: 800,
+        alt: "RedFeet TV Logo",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
