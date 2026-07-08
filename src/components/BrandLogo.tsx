@@ -160,7 +160,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({ logoKey, className = "w-fu
     case 'viki':
       return (
         <div className="flex items-baseline justify-center gap-0.5 select-none">
-          <span className="text-[10px] font-bold text-white/40 uppercase mr-0.5">Rakuten</span>
+          <span className="text-[10px] font-bold text-white uppercase mr-0.5">Rakuten</span>
           <span className="text-[21px] font-black text-[#00A8E5]">Viki</span>
         </div>
       );
