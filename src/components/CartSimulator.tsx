@@ -68,7 +68,7 @@ export const CartSimulator: React.FC<CartSimulatorProps> = ({
   }, [selectedItems, period, screensMap]);
 
   const handleWhatsAppCheckout = () => {
-    const phone = '5511999999999'; // Default configurable WhatsApp number
+    const phone = '558498071144'; // Default configurable WhatsApp number
     let message = `Olá REDFEET TV! Quero assinar o seguinte combo:\n\n`;
 
     selectedItems.forEach(item => {
