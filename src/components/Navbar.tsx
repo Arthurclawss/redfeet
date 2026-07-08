@@ -26,9 +26,10 @@ export const Navbar: React.FC = () => {
             const text = "Olá REDFEET TV! Quero assinar e tirar dúvidas sobre as telinhas.";
             window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
           }}
-          className="text-sm font-black uppercase tracking-widest text-white bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 px-10 py-4.5 rounded-full transition-all duration-300 shadow-[0_0_30px_rgba(34,197,94,0.5)] hover:scale-105 active:scale-95 border border-white/20 cursor-pointer"
+          className="text-xs sm:text-sm font-black uppercase tracking-widest text-white bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 px-4 sm:px-10 py-2.5 sm:py-4.5 rounded-full transition-all duration-300 shadow-[0_0_30px_rgba(34,197,94,0.5)] hover:scale-105 active:scale-95 border border-white/20 cursor-pointer"
         >
-          Fale Conosco no WhatsApp
+          <span className="hidden sm:inline">Fale Conosco no WhatsApp</span>
+          <span className="sm:hidden">WhatsApp</span>
         </button>
       </div>
     </nav>
