@@ -2,24 +2,16 @@
 
 import React, { useState, useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate, AnimatePresence } from 'framer-motion';
-import { Check } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { PRODUCTS, type Product } from '../data/data';
 import BrandLogo from './BrandLogo';
 
-interface FlyerGridProps {
-  selectedIds: string[];
-  onToggleSelect: (product: Product) => void;
-}
-
 interface FlyerCardProps {
   product: Product;
-  isSelected: boolean;
   idx: number;
-  onToggleSelect: (product: Product) => void;
 }
 
-const FlyerCard: React.FC<FlyerCardProps> = ({ product, isSelected, idx, onToggleSelect }) => {
+const FlyerCard: React.FC<FlyerCardProps> = ({ product, idx }) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   // 3D Motion Values
@@ -56,23 +48,26 @@ const FlyerCard: React.FC<FlyerCardProps> = ({ product, isSelected, idx, onToggl
     y.set(0);
   };
 
-  const handleToggle = () => {
-    if (!isSelected) {
-      const rect = cardRef.current?.getBoundingClientRect();
-      if (rect) {
-        const xPercent = (rect.left + rect.width / 2) / window.innerWidth;
-        const yPercent = (rect.top + rect.height / 2) / window.innerHeight;
-        
-        confetti({
-          particleCount: 25,
-          spread: 45,
-          origin: { x: xPercent, y: yPercent },
-          colors: [product.textColor, '#ffffff'],
-          ticks: 60
-        });
-      }
+  const handleClick = () => {
+    const rect = cardRef.current?.getBoundingClientRect();
+    if (rect) {
+      const xPercent = (rect.left + rect.width / 2) / window.innerWidth;
+      const yPercent = (rect.top + rect.height / 2) / window.innerHeight;
+      
+      confetti({
+        particleCount: 30,
+        spread: 50,
+        origin: { x: xPercent, y: yPercent },
+        colors: [product.textColor, '#ffffff'],
+        ticks: 80
+      });
     }
-    onToggleSelect(product);
+
+    setTimeout(() => {
+      const phone = '558498071144';
+      const text = `Olá REDFEET TV! Tenho interesse em assinar a telinha do ${product.name} por R$ ${product.price.toFixed(2)}/mês. Como faço para liberar meu acesso imediato?`;
+      window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
+    }, 200);
   };
 
   return (
@@ -85,18 +80,13 @@ const FlyerCard: React.FC<FlyerCardProps> = ({ product, isSelected, idx, onToggl
       transition={{ duration: 0.3 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      onClick={handleToggle}
+      onClick={handleClick}
       style={{
         rotateX,
         rotateY,
         transformStyle: 'preserve-3d',
-        boxShadow: isSelected ? `0 0 25px ${product.glowColor}` : undefined
       }}
-      className={`relative h-52 sm:h-64 rounded-2xl sm:rounded-3xl bg-black/40 border cursor-pointer select-none overflow-hidden transition-all duration-300 flex flex-col justify-between group ${
-        isSelected
-          ? 'border-red-600 bg-red-950/10'
-          : 'border-white/5 hover:border-white/10 hover:bg-white/[0.02]'
-      }`}
+      className="relative h-52 sm:h-64 rounded-2xl sm:rounded-3xl bg-black/40 border border-white/5 hover:border-white/15 cursor-pointer select-none overflow-hidden transition-all duration-300 flex flex-col justify-between group hover:bg-white/[0.03]"
     >
       {/* Background Hover Glow */}
       <motion.div
@@ -116,15 +106,6 @@ const FlyerCard: React.FC<FlyerCardProps> = ({ product, isSelected, idx, onToggl
         ) : (
           <span />
         )}
-        <div
-          className={`w-5.5 h-5.5 sm:w-6 h-6 rounded-full flex items-center justify-center border transition-all duration-300 ${
-            isSelected
-              ? 'bg-red-600 border-red-600 text-white'
-              : 'border-white/10 bg-black/40 text-transparent'
-          }`}
-        >
-          <Check className="w-3.5 h-3.5 stroke-[3]" />
-        </div>
       </div>
 
       {/* Logo (Centered) - Floating 3D Parallax Effect */}
@@ -138,18 +119,13 @@ const FlyerCard: React.FC<FlyerCardProps> = ({ product, isSelected, idx, onToggl
       {/* Price Banner with Brand-aligned Glow */}
       <div
         style={{ transform: 'translateZ(15px)' }}
-        className={`h-12 sm:h-14 border-t flex items-center justify-center px-4 relative z-10 transition-colors duration-300 ${
-          isSelected
-            ? 'border-red-500/20 bg-red-500/10 text-red-500'
-            : 'border-white/5 bg-white/[0.02] text-gray-400'
-        }`}
+        className="h-12 sm:h-14 border-t border-white/5 bg-white/[0.02] text-gray-400 flex items-center justify-center px-4 relative z-10 transition-colors duration-300 group-hover:border-white/10 group-hover:bg-white/[0.04]"
       >
         <div className="text-center">
           <span 
-            className="text-xs sm:text-base font-black mr-0.5 sm:mr-1 transition-all duration-300"
+            className="text-xs sm:text-base font-black mr-0.5 sm:mr-1 transition-all duration-300 text-white group-hover:text-red-500"
             style={{ 
-              color: isSelected ? product.textColor : '#ffffff',
-              textShadow: isSelected ? `0 0 10px ${product.glowColor}` : undefined
+              textShadow: `0 0 10px ${product.glowColor}`
             }}
           >
             R$ {product.price.toFixed(2)}
@@ -161,7 +137,7 @@ const FlyerCard: React.FC<FlyerCardProps> = ({ product, isSelected, idx, onToggl
   );
 };
 
-export const FlyerGrid: React.FC<FlyerGridProps> = ({ selectedIds, onToggleSelect }) => {
+export const FlyerGrid: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string>('Todos');
 
   const categories = ['Todos', 'Filmes', 'Séries', 'TV', 'Esportes', 'Música'];
@@ -194,14 +170,11 @@ export const FlyerGrid: React.FC<FlyerGridProps> = ({ selectedIds, onToggleSelec
       <motion.div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6">
         <AnimatePresence mode="popLayout">
           {filteredProducts.map((product, idx) => {
-            const isSelected = selectedIds.includes(product.id);
             return (
               <FlyerCard
                 key={product.id}
                 product={product}
-                isSelected={isSelected}
                 idx={idx}
-                onToggleSelect={onToggleSelect}
               />
             );
           })}

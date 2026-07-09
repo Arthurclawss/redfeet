@@ -1,52 +1,21 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, MessageCircle, Play } from 'lucide-react';
-import { type Product } from '../data/data';
 import Navbar from '../components/Navbar';
 import ParallaxBackground from '../components/ParallaxBackground';
 import { TopBadges, BottomBadges } from '../components/TrustBadges';
 import FlyerGrid from '../components/FlyerGrid';
-import CartSimulator from '../components/CartSimulator';
 import FAQ from '../components/FAQ';
 import Footer from '../components/Footer';
 
 export default function Home() {
-  const [selectedItems, setSelectedItems] = useState<Product[]>([]);
-  const [screensMap, setScreensMap] = useState<Record<string, number>>({});
-
-  const handleToggleSelect = (product: Product) => {
-    if (selectedItems.some((item) => item.id === product.id)) {
-      setSelectedItems((prev) => prev.filter((item) => item.id !== product.id));
-      const updatedScreens = { ...screensMap };
-      delete updatedScreens[product.id];
-      setScreensMap(updatedScreens);
-    } else {
-      setSelectedItems((prev) => [...prev, product]);
-      setScreensMap((prev) => ({ ...prev, [product.id]: 1 }));
-    }
+  const handleWhatsAppDefault = () => {
+    const phone = '558498071144';
+    const text = "Olá REDFEET TV! Quero assinar e tirar dúvidas sobre as telinhas.";
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
   };
-
-  const handleRemoveItem = (productId: string) => {
-    setSelectedItems((prev) => prev.filter((item) => item.id !== productId));
-    const updatedScreens = { ...screensMap };
-    delete updatedScreens[productId];
-    setScreensMap(updatedScreens);
-  };
-
-  const handleClearCart = () => {
-    setSelectedItems([]);
-    setScreensMap({});
-  };
-
-  const handleUpdateScreens = (productId: string, delta: number) => {
-    const current = screensMap[productId] || 1;
-    const nextValue = Math.min(5, Math.max(1, current + delta));
-    setScreensMap((prev) => ({ ...prev, [productId]: nextValue }));
-  };
-
-  const selectedIds = selectedItems.map((item) => item.id);
 
   return (
     <>
@@ -112,27 +81,12 @@ export default function Home() {
             className="max-w-xl mx-auto pt-6 text-center space-y-4"
           >
             <button
-              onClick={() => {
-                const phone = '558498071144';
-                let text = "Olá REDFEET TV! Quero assinar e tirar dúvidas sobre as telinhas.";
-                if (selectedItems.length > 0) {
-                  text = `Olá REDFEET TV! Tenho interesse em assinar o combo com as telinhas:\n\n` + 
-                         selectedItems.map(item => `• ${item.name}`).join('\n') + 
-                         `\n\nComo posso prosseguir para ativação imediata?`;
-                }
-                window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
-              }}
+              onClick={handleWhatsAppDefault}
               className="w-full py-5 bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white font-black uppercase tracking-widest text-sm rounded-2xl flex items-center justify-center gap-3 shadow-[0_0_40px_rgba(34,197,94,0.4)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] border-t border-white/20 cursor-pointer"
             >
               <MessageCircle className="w-6 h-6 fill-white" />
               Fale conosco pelo WhatsApp
             </button>
-            
-            {selectedItems.length > 0 && (
-              <p className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider">
-                {selectedItems.length} telinha{selectedItems.length > 1 ? 's' : ''} selecionada{selectedItems.length > 1 ? 's' : ''} no catálogo abaixo
-              </p>
-            )}
           </motion.div>
         </section>
 
@@ -146,7 +100,7 @@ export default function Home() {
                 PLANOS INDIVIDUAIS
               </h3>
             </div>
-            <FlyerGrid selectedIds={selectedIds} onToggleSelect={handleToggleSelect} />
+            <FlyerGrid />
           </div>
         </section>
 
@@ -164,16 +118,7 @@ export default function Home() {
       {/* Floating Bottom CTA */}
       <div className="fixed bottom-6 left-0 right-0 z-40 px-6 flex justify-center pointer-events-none">
         <button
-          onClick={() => {
-            const phone = '558498071144';
-            let text = "Olá REDFEET TV! Quero assinar e tirar dúvidas sobre as telinhas.";
-            if (selectedItems.length > 0) {
-              text = `Olá REDFEET TV! Tenho interesse em assinar o combo com as telinhas:\n\n` + 
-                     selectedItems.map(item => `• ${item.name}`).join('\n') + 
-                     `\n\nComo posso prosseguir para ativação imediata?`;
-            }
-            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
-          }}
+          onClick={handleWhatsAppDefault}
           className="pointer-events-auto bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white text-xs font-black uppercase tracking-widest px-6 py-4 rounded-full flex items-center gap-2 shadow-[0_8px_30px_rgba(16,185,129,0.4)] border border-white/10 transition-transform hover:scale-105 active:scale-95 text-center cursor-pointer"
         >
           <MessageCircle className="w-4 h-4 fill-white" />
@@ -186,5 +131,4 @@ export default function Home() {
   );
 }
 
-// Trigger Vercel rebuild: 2026-07-09-01
-
+// Trigger Vercel rebuild: 2026-07-09-02
