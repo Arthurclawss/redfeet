@@ -103,23 +103,14 @@ export default function Home() {
           >
             <TopBadges />
           </motion.div>
-        </section>
 
-        {/* Catalog & Cart Section */}
-        <section id="catalog" className="relative z-10 max-w-[94vw] xl:max-w-[1600px] mx-auto px-4 pt-16 md:pt-24 space-y-12">
-          {/* Channel Grid */}
-          <div className="space-y-6">
-            <div className="flex items-center gap-2 border-b border-white/5 pb-3">
-              <Play className="w-5 h-5 text-red-500 fill-red-500" />
-              <h3 className="text-white font-black uppercase tracking-wider text-sm">
-                PLANOS INDIVIDUAIS
-              </h3>
-            </div>
-            <FlyerGrid selectedIds={selectedIds} onToggleSelect={handleToggleSelect} />
-          </div>
-
-          {/* Massive WhatsApp Button (Stacked below the grid) */}
-          <div className="max-w-xl mx-auto pt-8 text-center space-y-4">
+          {/* Massive WhatsApp Button in Hero Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="max-w-xl mx-auto pt-6 text-center space-y-4"
+          >
             <button
               onClick={() => {
                 const phone = '558498071144';
@@ -139,9 +130,23 @@ export default function Home() {
             
             {selectedItems.length > 0 && (
               <p className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider">
-                {selectedItems.length} telinha{selectedItems.length > 1 ? 's' : ''} selecionada{selectedItems.length > 1 ? 's' : ''} no catálogo acima
+                {selectedItems.length} telinha{selectedItems.length > 1 ? 's' : ''} selecionada{selectedItems.length > 1 ? 's' : ''} no catálogo abaixo
               </p>
             )}
+          </motion.div>
+        </section>
+
+        {/* Catalog Section */}
+        <section id="catalog" className="relative z-10 max-w-[94vw] xl:max-w-[1600px] mx-auto px-4 pt-16 md:pt-24 space-y-12">
+          {/* Channel Grid */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-2 border-b border-white/5 pb-3">
+              <Play className="w-5 h-5 text-red-500 fill-red-500" />
+              <h3 className="text-white font-black uppercase tracking-wider text-sm">
+                PLANOS INDIVIDUAIS
+              </h3>
+            </div>
+            <FlyerGrid selectedIds={selectedIds} onToggleSelect={handleToggleSelect} />
           </div>
         </section>
 
