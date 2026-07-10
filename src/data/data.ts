@@ -42,8 +42,8 @@ export interface FAQItem {
 export const BENEFITS: Benefit[] = [
   {
     id: 'ben-1',
-    title: 'Ativação Instantânea',
-    description: 'Acesso liberado de forma 100% automatizada em até 5 minutos após o pagamento direto no e-mail.',
+    title: 'Envio pelo Suporte',
+    description: 'Os dados de login e senha são enviados rapidamente pelo nosso suporte no WhatsApp após a confirmação do pagamento.',
     iconName: 'Zap'
   },
   {
@@ -333,7 +333,7 @@ export const FAQ_ITEMS: FAQItem[] = [
   {
     id: 'faq-1',
     question: 'Como funciona a ativação das telinhas?',
-    answer: 'A ativação é 100% automatizada. Logo após a confirmação do pagamento, nosso sistema gera as credenciais exclusivas e envia de forma instantânea para o seu WhatsApp e e-mail cadastrados, acompanhados de um guia passo a passo em vídeo.'
+    answer: 'O envio do seu acesso é feito de forma simples e rápida pelo nosso suporte. Logo após você enviar o comprovante de pagamento no WhatsApp, nossa equipe valida as informações e envia os dados de acesso da sua conta imediatamente.'
   },
   {
     id: 'faq-2',

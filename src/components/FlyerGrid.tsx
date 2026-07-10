@@ -65,7 +65,7 @@ const FlyerCard: React.FC<FlyerCardProps> = ({ product, idx }) => {
 
     setTimeout(() => {
       const phone = '558498071144';
-      const text = `Olá REDFEET TV! Tenho interesse em assinar a telinha do ${product.name} por R$ ${product.price.toFixed(2)}/mês. Como faço para liberar meu acesso imediato?`;
+      const text = `Olá REDFEET TV! Tenho interesse em assinar a telinha do ${product.name} por R$ ${product.price.toFixed(2)}/mês. Como faço para liberar meu acesso?`;
       window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
     }, 200);
   };
